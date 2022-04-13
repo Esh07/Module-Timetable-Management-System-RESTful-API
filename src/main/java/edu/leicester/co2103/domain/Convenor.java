@@ -2,6 +2,7 @@ package edu.leicester.co2103.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -24,7 +25,9 @@ public class Convenor {
 	@ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn
 	private List<Module> modules;
-
+	
+	public Convenor() {}
+	
 	public Convenor(String name, Position position) {
 		this(name, position, new ArrayList<>());
 	}
@@ -67,5 +70,28 @@ public class Convenor {
 	public void setModules(List<Module> modules) {
 		this.modules = modules;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if (!(o instanceof Convenor))
+			return false;
+		Convenor convenor = (Convenor) o;
+		return Objects.equals(this.id, convenor.id) 
+				&& Objects.equals(this.name, convenor.name) 
+				&& Objects.equals(this.position, convenor.position) 
+				&& Objects.equals(this.modules, convenor.modules);
+	}
+	
+	@Override
+	public int hashCode(){
+		return Objects.hash(this.id, this.name, this.position, this.modules);
+	}
+
+	@Override
+	public String toString() {
+		return "Convenor [id=" + id + ", name=" + name + ", position=" + position + ", modules=" + modules + "]";
+	}
+	
 
 }

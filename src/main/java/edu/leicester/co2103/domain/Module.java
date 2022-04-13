@@ -2,6 +2,7 @@ package edu.leicester.co2103.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -78,4 +79,30 @@ public class Module {
 	public void setSessions(List<Session> sessions) {
 		this.sessions = sessions;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if (!(o instanceof Module))
+			return false;
+		Module module = (Module) o;
+		return Objects.equals(this.code, module.code) 
+				&& Objects.equals(this.title, module.title) 
+				&& Objects.equals(this.level, module.level) 
+				&& Objects.equals(this.optional, module.optional)
+				&& Objects.equals(this.sessions, module.sessions);
+	}
+	
+	@Override
+	public int hashCode(){
+		return Objects.hash(this.code, this.title, this.level, this.optional, this.sessions);
+	}
+
+	@Override
+	public String toString() {
+		return "Module [code=" + code + ", title=" + title + ", level=" + level + ", optional=" + optional
+				+ ", sessions=" + sessions + "]";
+	}
+	
+	
 }

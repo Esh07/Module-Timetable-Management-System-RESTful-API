@@ -1,6 +1,7 @@
 package edu.leicester.co2103.domain;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,4 +44,15 @@ public class Session {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	
+	
+	
+	
+
+	@Override
+	public String toString() {
+		return "Session [id=" + id + ", topic=" + topic + ", datetime=" + datetime + ", duration=" + duration + "]";
+	}
+	
+	
 }
