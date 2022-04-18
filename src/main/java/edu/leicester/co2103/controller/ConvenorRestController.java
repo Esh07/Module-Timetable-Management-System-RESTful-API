@@ -3,13 +3,10 @@ package edu.leicester.co2103.controller;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import org.springframework.http.HttpHeaders;
+import edu.leicester.co2103.domain.Module;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,12 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import edu.leicester.co2103.controller.errorinfo.ErrorMessage;
 import edu.leicester.co2103.domain.Convenor;
 import edu.leicester.co2103.exception.ConvenorNotFoundException;
 import edu.leicester.co2103.repo.ConvenorRepository;
@@ -35,7 +28,9 @@ public class ConvenorRestController {
 	
 	private final AtomicLong counter = new AtomicLong();
 	
-	
+	/*
+	list all convenor
+	 */
 	//listing down all the module convenors
 	@GetMapping("/convenors")
 	public ResponseEntity<List<Convenor>> allConvenor(){
@@ -50,46 +45,74 @@ public class ConvenorRestController {
 		return new ResponseEntity<List<Convenor>>(convenors, HttpStatus.OK);
 	}
 	
-	
+
+	/*
+	add new convenor
+	 */
 	@PostMapping("/convenors")
-	public ResponseEntity<?> newConvenor(@RequestBody Convenor newConvenor) {
+	public ResponseEntity<?> newConvenor(@RequestBody Convenor convenor) {
 		
 		//if newConvenor id not exist adds to repo and return http status created
-		if(!repo.existsById(newConvenor.getId())) {
-			
-			repo.save(newConvenor);
-			return new ResponseEntity<Convenor>(newConvenor, HttpStatus.CREATED);
+		if(!(repo.existsById(convenor.getId()))) {
+			repo.save(convenor);
+			return new ResponseEntity<>(convenor.getId(), HttpStatus.CREATED);
 		}
-		
-		return new ResponseEntity(newConvenor.getName() + "is already exists in the system.", HttpStatus.CONFLICT
+		return new ResponseEntity(convenor.getName() + "is already exists in the system.", HttpStatus.CONFLICT
 				);
 	}
+
+	/*
+	get specific convenor by id
+	 */
 	
 	//get single convenor by id
 	@GetMapping("/convenors/{id}")
-	EntityModel<Convenor> oneConvenor(@PathVariable Long id) {
+	public ResponseEntity<?> getConvenor(@PathVariable Long id) {
 		Convenor convenor = repo.findById(id)
 				.orElseThrow(() -> new ConvenorNotFoundException(id));
-		return EntityModel.of(convenor,
-				linkTo(methodOn(ConvenorRestController.class).oneConvenor(id)).withSelfRel(),
-						linkTo(methodOn(ConvenorRestController.class).allConvenor()).withRel("convenor"));
+		return new ResponseEntity<>(convenor, HttpStatus.OK);
 	}
-	
-	//update a convenor
-	
+
+
+
+	/*
+		update a convenor information
+	 */
 	@PutMapping("/convenors/{id}")
-	Convenor updateConvenor(@RequestBody Convenor newConvenor, @PathVariable Long id) {
-		return repo.findById(id)
-				.map(convenor -> {
-					convenor.setName(newConvenor.getName());
-					convenor.setPosition(newConvenor.getPosition());
-					convenor.setModules(newConvenor.getModules());
-					return repo.save(convenor);
+	public ResponseEntity<?> updateConvenor(@PathVariable Long id, @RequestBody Convenor convenor) {
+
+		repo.findById(id).map(convenorInfo -> {
+					if (convenor.getName().isEmpty()){
+						convenor.setName(repo.findById(id).get().getName());
+					} else {
+						convenor.setName(convenor.getName());
+					}
+					if (convenor.getPosition() == null){
+						convenor.setPosition(repo.findById(id).get().getPosition());
+					}else {
+						convenor.setPosition(convenor.getPosition());
+					}
+					if (convenor.getModules() != null){
+						List<Module> oldModules = repo.findById(id).get().getModules();
+						List<Module> newModules = convenor.getModules();
+						for (Module oldM:oldModules
+							 ) {
+							for (Module newM: newModules
+								 ) {
+								if(oldM.getCode() != newM.getCode()){
+									convenor.setModules(convenor.getModules());
+								}
+							}
+						}
+					} else {
+						convenor.setModules(repo.findById(id).get().getModules());
+					}
+
+					repo.save(convenor);
+					return new ResponseEntity<>(repo.findById(id).get(), HttpStatus.OK);
 				})
-				.orElseGet(() -> {
-					newConvenor.setId(id);
-					return repo.save(newConvenor);
-				});
+				.orElseThrow(() -> new ConvenorNotFoundException(id));
+		return new ResponseEntity<>(convenor, HttpStatus.NO_CONTENT);
 	};
 	
 	
