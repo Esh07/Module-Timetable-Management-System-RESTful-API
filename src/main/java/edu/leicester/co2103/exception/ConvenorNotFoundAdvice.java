@@ -12,7 +12,7 @@ public class ConvenorNotFoundAdvice {
 	@ResponseBody
 	@ExceptionHandler(ConvenorNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String convenorNotFoundHandler(ConvenorNotFoundException ex) {
+	String ConvenorNotFoundHandler(ConvenorNotFoundException ex) {
 		return ex.getMessage();
 	}
 	

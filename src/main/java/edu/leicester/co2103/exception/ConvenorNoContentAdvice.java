@@ -12,7 +12,7 @@ public class ConvenorNoContentAdvice {
     @ResponseBody
     @ExceptionHandler(ConvenorNoContentException.class)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    String convenorNotFoundHandler(ConvenorNoContentException ex) {
+    String ConvenorNoContentHandler(ConvenorNoContentException ex) {
         return ex.getMessage();
     }
 
