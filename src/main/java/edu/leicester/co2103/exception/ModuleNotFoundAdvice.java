@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import edu.leicester.co2103.controller.info.ErrorInfo;
 
 @ControllerAdvice
-public class ConvenorNotFoundAdvice {
+public class ModuleNotFoundAdvice {
 
-	@ExceptionHandler(ConvenorNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	@ResponseBody
-	ErrorInfo convenorNotFoundHandler(ConvenorNotFoundException ex) {
-		return new ErrorInfo(ex.getMessage());
-	}
-
+    @ResponseBody
+    @ExceptionHandler(ModuleNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ErrorInfo ModuleNotFoundHandler(ModuleNotFoundException ex) {
+        return new ErrorInfo(ex.getMessage());
+    }
 }

@@ -1,21 +1,19 @@
 package edu.leicester.co2103.exception;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import edu.leicester.co2103.controller.info.ErrorInfo;
 
-@ControllerAdvice
-public class ConvenorNoContentAdvice {
-
+public class BadRequestAdvice {
     @ResponseBody
-    @ExceptionHandler(ConvenorNoContentException.class)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    ErrorInfo ConvenorNoContentHandler(ConvenorNoContentException ex) {
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ErrorInfo BadRequestHandler(HttpServletRequest req, Exception ex) {
         return new ErrorInfo(ex.getMessage());
     }
-
 }

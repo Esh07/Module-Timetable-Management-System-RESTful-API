@@ -103,6 +103,10 @@ public class Module {
 		return "Module [code=" + code + ", title=" + title + ", level=" + level + ", optional=" + optional
 				+ ", sessions=" + sessions + "]";
 	}
+
+    public List<Session> getConvenors() {
+        return null;
+    }
 	
 	
 }
