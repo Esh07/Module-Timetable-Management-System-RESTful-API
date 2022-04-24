@@ -1,6 +1,1034 @@
 openapi: 3.0.1
-
 info:
-  title: part1 
-
-# Placeholder file, replace this content with your Open API 3 spec
+  title: Timetable System REST API
+  description: >-
+    This is a simple timetable system for The School of Computing and Mathematical Sciences at [University of Leicester](https://le.ac.uk) to organise and manage modules\' timetables. Its keeps track of convenors, the  modules  they  teach,  and  the  sessions  delivered  in  each  module.
+    <br />
+    <br />
+    Below is detailed documentation of all end points, parameters, error messages available in the Timetable system.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Locahost server
+tags:
+  - name: convenors
+    description: Everything about convenors
+  - name: modules
+    description: Everything about modules
+  - name: sessions
+    description: Everything about sessions
+    
+paths:
+  /convenors:
+    get:
+      summary: >- 
+          Get all the list of available convenor
+      tags:
+        - convenors
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/ConvenorList'
+                  
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'No convenor found'
+    post:
+      tags:
+        - convenors
+      summary: >-
+        Add new convenor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Convenor'
+      responses:
+        '201': #response 201 status for CREATED
+          description: New convenor successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Convenor successfully created'
+                        
+        '400': #Response 400 status for BAD Request
+          description: Bad request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                  message: "Invalid input data"
+        '409': #Response 409 status for CONFLICT
+          description: Convenor id already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: "Convenor with id is already exists in the system."
+  /convenors/{id}:
+    get:
+      tags:
+        - convenors
+      summary: >-
+        Get convenor by id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the convenor to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/SingleConvenor'
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find convenor with id'
+    put:
+      tags:
+        - convenors
+      summary: >-
+        Update convenor by id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the convenor to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Convenor'
+      responses:
+        '200': #The response status code for OK for success
+          description: convenor successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessInfo"
+              example:
+                message: "Convenor successfully updated"
+        '404': #The response status code
+          description: convenor not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not found convenor with id'
+    delete:
+      tags:
+        - convenors
+      summary: >-
+        Delete convenor by id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the convenor to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          description: convenor successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Convenor with id successfully deleted'
+        '404': #The response status code
+          description: convenor not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find convenor with id'
+        '400': #Response 400 status for BAD Request
+          description: Bad request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                  message: "Invalid input data"
+  /convenors/{id}/modules: #Get all modules of a convenor
+    get:
+      tags:
+        - convenors
+      summary: >-
+        Get all modules of a convenor
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the convenor to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/ModuleList'
+        '204': #The response status code
+          description: No content
+          content: {}
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find convenor with id'
+  /modules:
+    get:
+      tags:
+        - modules
+      summary: >-
+        Get all modules
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/ModuleList'
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find any module'
+    post:
+      tags:
+        - modules
+      summary: >-
+        Add new module
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Module'
+      responses:
+        '201': #response 201 status for CREATED
+          description: New module successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Module successfully created'
+        '400': #Response 400 status for BAD Request
+          description: Bad request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                  message: "Invalid input data"
+        '409': #Response 409 status for CONFLICT
+          description: Module id already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: "Module with id is already exists"
+  /modules/{id}:
+    get:
+      tags:
+        - modules
+      summary: >-
+        Get module by id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the module to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/SingleModule'
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find module with id'
+    delete:
+      tags:
+        - modules
+      summary: >-
+        Delete module by id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the module to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          description: module successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Module successfully deleted'
+        '404': #The response status code
+          description: module not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find module with id'
+    patch:
+      tags:
+        - modules
+      summary: >-
+        Update module by id
+      parameters:
+        - name: id
+          in: path
+          description: >-
+            The id of the module to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Module'
+      responses:
+        '200': #The response status code for OK for success
+          description: module successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Module successfully updated'
+        '404': #The response status code
+          description: module not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find module with id'
+  /modules/{code}/sessions: #Get all sessions of a module
+    get:
+      tags:
+        - modules
+      summary: >-
+        Get all sessions of a module
+      parameters:
+        - name: code
+          in: path
+          description: >-
+            The code of the module to be retrieved
+          required: true
+          schema:
+            type: string
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/SessionList'
+        '204': #The response status code
+          description: No content
+          content: {}
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/responses/NoSessionFoundForModule'
+                  - $ref: '#/components/responses/NoModuleFound'
+              examples:
+                NoSessionFoundForModule:
+                  value:
+                    message: 'No seesion found for module M1' 
+                NoModuleFound:
+                  value:
+                    message: 'Could not find module with code'
+    post:
+      tags:
+        - modules
+      summary: >-
+        Add new session to a module
+      parameters:
+        - name: code
+          in: path
+          description: >-
+            The code of the module to be retrieved
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      responses:
+        '201': #response 201 status for CREATED
+          description: New session successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Session successfully created'
+        '400': #Response 400 status for BAD Request
+          description: Bad request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                  message: "Invalid input data"
+        '404': #Response 404 status for NOT FOUND
+          description: Module not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Could not find module with code'
+        '409': #Response 409 status for CONFLICT
+          description: Session id already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: "Session with id already exist" 
+  /modules/{code}/sessions/{id}: #Get session by id
+    get:
+      tags:
+        - modules
+      summary: >-
+        Get session by id
+      parameters:
+        - name: code
+          in: path
+          description: >-
+            The code of the module to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >-
+            The id of the session to be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          $ref: '#/components/responses/SingleSession'
+        '404': #The response status code
+          description: Not found
+          content: 
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/responses/NoModuleFound'
+                  - $ref: '#/components/responses/SessionIdNotFound'
+              examples:
+                MoudeCodeNotFound:
+                  value:
+                    message: 'Could not find module with code'
+                SessionIdNotFound:
+                  value:
+                    message: 'Could not find session with id in module'
+    delete:
+      tags:
+        - modules
+      summary: >-
+        Delete session by id
+      parameters:
+        - name: code
+          in: path
+          description: >-
+            The code of the module to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >-
+            The id of the session to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200': #The response status code for OK for success
+          description: session successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Session successfully deleted from module with code'
+        '404': #The response status code
+          description: not found
+          content: 
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/responses/NoModuleFound'
+                  - $ref: '#/components/responses/SessionIdNotFound'
+              examples:
+                MoudeCodeNotFound:
+                  value:
+                    message: 'Could not find module with code'
+                SessionIdNotFound:
+                  value:
+                    message: 'Could not find session with id in module'
+    patch:
+      tags:
+        - modules
+      summary: >-
+        Update session by id
+      parameters:
+        - name: code
+          in: path
+          description: >-
+            The code of the module to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >-
+            The id of the session to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      responses:
+        '200': #The response status code for OK for success
+          description: session successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Session successfully updated'
+        '404': #The response status code
+          description: session not found
+          content: 
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/responses/NoModuleFound'
+                  - $ref: '#/components/responses/SessionIdNotFound'
+              examples:
+                MoudeCodeNotFound:
+                  value:
+                    message: 'Could not find module with code'
+                SessionIdNotFound:
+                  value:
+                    message: 'Could not find session with id in module.'  
+    put:
+      tags:
+        - modules
+      summary: >-
+        Update session by id
+      parameters:
+        - name: code
+          in: path
+          description: >-
+            The code of the module to be retrieved
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >-
+            The id of the session to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      responses:
+        '200': #The response status code for OK for success
+          description: session successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'Session successfully updated'
+        '404': #The response status code
+          description: not found
+          content: 
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/responses/NoModuleFound'
+                  - $ref: '#/components/responses/SessionIdNotFound'
+              examples:
+                MoudeCodeNotFound:
+                  value:
+                    message: 'Could not find module with code'
+                SessionIdNotFound:
+                  value:
+                    message: 'Could not find session with id in module.'          
+  /sessions: #Get all sessions
+    get:
+      tags:
+        - sessions
+      summary: >-
+        Get sessions
+      parameters:
+        - name: convenor
+          in: query
+          description: >-
+            The convenor of the sessions to be retrieved by given convenor id
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: module
+          in: query
+          description: >-
+            The module of the sessions to be retrieved by given module code
+          required: false
+          schema:
+            type: string
+      responses:
+        '200': #The response status code for OK for success
+          description: sessions successfully retrieved
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/Session'
+                  - $ref: '#/components/schemas/Session'
+                  - $ref: '#/components/schemas/Session'
+                  - $ref: '#/components/schemas/Session'
+              examples:
+                AllSessionList:
+                  $ref: '#/components/examples/SessionList'
+                SessionListByCovenor:
+                  $ref: '#/components/examples/SessionList'
+                SessionListByModule:
+                  $ref: '#/components/examples/SessionList'
+                SessionListByModuleThatTaughtByConvenor:
+                  $ref: '#/components/examples/SingleSession'
+        '400': #The response status code
+          description: Bad request
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'Invalid request'
+        '404': #The response status code
+          description: not found
+          content: 
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  - $ref: '#/components/responses/NoModuleFound'
+                  - $ref: '#/components/responses/NoConvenorFound'
+              examples:
+                NoSessionsFound:
+                  value:
+                    message: 'No sessions found'
+                NoSessionFoundInModuleTaughtByConvenor:
+                  value:
+                    message: 'No sessions found for module with id taught by convenor with id'
+                NoModuleFound:
+                  value:
+                    message: 'Could not find any modules'
+                NoConvenorFound:
+                  value:
+                    message: 'Could not find any convenors'
+    delete:
+      tags:
+        - sessions
+      summary: >-
+        Delete all sessions
+      responses:
+        '200': #The response status code for OK for success
+          description: sessions successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessInfo'
+              example:
+                message: 'All sessions succesfully deleted'
+        '404': #The response status code
+          description: not found
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorInfo'
+              example:
+                message: 'No session found'
+components:
+  schemas:
+    Convenor: #The schema for convenor
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          description: Convenor name
+        position:
+          type: string
+          description: Convenor position
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
+    Module: #The schema for Module
+      type: object
+      properties:
+        code:
+          type: string
+          description: Module code
+        title:
+          type: string
+          description: Module title
+        level:
+          type: integer
+          format: int32
+          description: Module level
+        optional:
+          type: boolean
+          description: Module optional
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+    Session:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Session id
+        topic:
+          type: string
+          description: Session topic
+        datetime:
+          type: string
+          format: date-time
+          description: Session date and time
+        duration:
+          type: integer
+          format: int64
+          description: Session duration
+    Position:
+      type: string
+      description: Position of the convenor
+      enum:
+        - GTA
+        - LECTURER
+        - PROFESSOR
+    ErrorInfo:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          default: Error message
+    SuccessInfo:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: Success message
+  requestBodies:
+    Covenor:
+      description: A JSON object containing a Convenor information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Convenor'
+    Module:
+      description: A JSON object containing a Module information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Module'
+    Session:
+      description: A JSON object containing a Session information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Session'
+  responses:
+    ConvenorList:
+      description: A JSON containing convenors objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Convenor'
+          example:
+            convenors:
+              - id: 1
+                name: Convenor 1
+                position: GTA
+                modules:
+                  - code: M1
+                    title: Module 1
+                    level: 1
+                    optional: false
+                    sessions:
+                      - id: 1
+                        topic: Topic 1
+                        datetime: "2020-01-01T00:00:00Z"
+                        duration: 1
+                      - id: 2
+                        topic: Topic 2
+                        datetime: "2020-01-02T00:00:00Z"
+                        duration: 2
+                  - code: M2
+                    title: Module 2
+                    level: 2
+                    optional: false
+                    sessions:
+                      - id: 3
+                        topic: Topic 3
+                        datetime: "2020-01-03T00:00:00Z"
+                        duration: 3
+                      - id: 4
+                        topic: Topic 4
+                        datetime: "2020-01-04T00:00:00Z"
+                        duration: 4
+    SingleConvenor:
+      description: A JSON object containing a convenor
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Convenor'
+          example:
+            convenor:
+              id: 1
+              name: Convenor 1
+              position: GTA
+              modules:
+                - code: M1
+                  title: Module 1
+                  level: 1
+                  optional: false
+                  sessions:
+                    - id: 1
+                      topic: Topic 1
+                      datetime: "2020-01-01T00:00:00Z"
+                      duration: 1
+                    - id: 2
+                      topic: Topic 2
+                      datetime: "2020-01-02T00:00:00Z"
+                      duration: 2
+                - code: M2
+                  title: Module 2
+                  level: 2
+                  optional: false
+                  sessions:
+                    - id: 3
+                      topic: Topic 3
+                      datetime: "2020-01-03T00:00:00Z"
+                      duration: 3
+                    - id: 4
+                      topic: Topic 4
+                      datetime: "2020-01-04T00:00:00Z"
+                      duration: 4
+    ModuleList:
+      description: A JSON containing convenor modules objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Module'
+          example:
+            modules:
+              - code: M1
+                title: Module 1
+                level: 1
+                optional: false
+                sessions:
+                  - id: 1
+                    topic: Topic 1
+                    datetime: "2020-01-01T00:00:00Z"
+                    duration: 1
+                  - id: 2
+                    topic: Topic 2
+                    datetime: "2020-01-02T00:00:00Z"
+                    duration: 2
+              - code: M2
+                title: Module 2
+                level: 2
+                optional: false
+                sessions:
+                  - id: 3
+                    topic: Topic 3
+                    datetime: "2020-01-03T00:00:00Z"
+                    duration: 3
+                  - id: 4
+                    topic: Topic 4
+                    datetime: "2020-01-04T00:00:00Z"
+                    duration: 4
+    SingleModule:
+      description: A JSON object containing a module
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Module'
+          example:
+            module:
+              code: M1
+              title: Module 1
+              level: 1
+              optional: false
+              sessions:
+                - id: 1
+                  topic: Topic 1
+                  datetime: "2020-01-01T00:00:00Z"
+                  duration: 1
+                - id: 2
+                  topic: Topic 2
+                  datetime: "2020-01-02T00:00:00Z"
+                  duration: 2  
+    SessionList:
+      description: A JSON containing sessions objects
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Session'
+          example:
+            sessions:
+              - id: 1
+                topic: Topic 1
+                datetime: "2020-01-01T00:00:00Z"
+                duration: 1
+              - id: 2
+                topic: Topic 2
+                datetime: "2020-01-02T00:00:00Z"
+                duration: 2
+    SingleSession:
+      description: A JSON object containing a session
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Session'
+          example:
+            session:
+              id: 1
+              topic: Topic 1
+              datetime: "2020-01-01T00:00:00Z"
+              duration: 1
+    NoSessionFoundForModule:
+      description: No session found for the given module
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            message: No session found for module M1
+    NoModuleFound:
+      description: given modulecode not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            message: Could not find module with code
+    SessionIdNotFound:
+      description: given session id not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            message: Could not find session with id in module
+    NoConvenorFound:
+      description: given convenor id not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorInfo'
+          example:
+            message: Could not find convenor with id
+  examples:
+    SessionList: 
+      value:
+        sessions:
+          - id: 1
+            topic: Topic 1
+            datetime: "2020-01-01T00:00:00Z"
+            duration: 1
+          - id: 2
+            topic: Topic 2
+            datetime: "2020-01-02T00:00:00Z"
+            duration: 2
+    SingleSession:
+      value:
+        session:
+          id: 1
+          topic: Topic 1
+          datetime: "2020-01-01T00:00:00Z"
+          duration: 1
+      
