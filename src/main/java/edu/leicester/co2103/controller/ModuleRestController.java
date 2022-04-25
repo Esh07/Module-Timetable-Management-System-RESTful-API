@@ -272,7 +272,7 @@ public class ModuleRestController {
             moduleRepo.save(module);
             // return SuccessInfo object with http status code OK
             return new ResponseEntity<SuccessInfo>(
-                    new SuccessInfo("Session successfully deleted from module with code" + code),
+                    new SuccessInfo("Session successfully deleted from module with code " + code),
                     HttpStatus.OK);
         } else {
 
