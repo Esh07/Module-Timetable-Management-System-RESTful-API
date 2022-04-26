@@ -1,8 +1,11 @@
 package edu.leicester.co2103.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import edu.leicester.co2103.domain.Module;
+import edu.leicester.co2103.domain.Position;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,33 +84,56 @@ public class ConvenorRestController {
 	 * add new convenor
 	 */
 	@PostMapping("/convenors")
-	public ResponseEntity<?> newConvenor(@RequestBody Convenor convenor, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> newConvenor(HttpEntity<Convenor> convenor, UriComponentsBuilder ucBuilder) {
+		Convenor currentConvenor = convenor.getBody();
 
-		// if newConvenor id not exist adds to repo and return http status created
-		if (!(repo.existsById(convenor.getId()))) {
-			// add new convenor to repo
-			repo.save(convenor);
+		// String incomingPosition =
+		// currentConvenor.getPosition().toString().toUpperCase();
 
-			HttpHeaders headers = new HttpHeaders();
-			// set location header to url of newly created convenor
-			headers.setLocation(ucBuilder.path("/convenors/{id}").buildAndExpand(convenor.getId()).toUri());
+		// Boolean isPositionValid = false;
 
-			// return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+		// Position[] validPositions = Position.values();
+		// // check if position is valid
+		// for (Position word : validPositions) {
+		// // check currentConvenor.getPosition() is exists in Posision.values() enum
+		// list
+		// if (word.toString() != incomingPosition) {
+		// isPositionValid = false;
+		// } else {
+		// isPositionValid = true;
 
-			// return header with location of new resource and status code created with new
-			// resources body
-			return ResponseEntity.created(headers.getLocation()).headers(headers)
-					.body(new SuccessInfo("New covenor successfully created"));
+		// }
+		// }
 
-		} else if (repo.existsById(convenor.getId())) {
-			// if id exist return conflict status
-			return new ResponseEntity<ErrorInfo>(
-					new ErrorInfo("Convenor with id " + convenor.getId() + "is already exists in the system."),
-					HttpStatus.CONFLICT);
-		} else
-			// if something else then return bad request status
-			return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid input data"),
-					HttpStatus.BAD_REQUEST);
+		if (!(currentConvenor.getName() == null && currentConvenor.getModules() == null
+				&& currentConvenor.getPosition() == null)) {
+			// if newConvenor id not exist adds to repo and return http status created
+			if (!(repo.existsById(convenor.getBody().getId()))) {
+				// add new convenor to repo
+				repo.save(convenor.getBody());
+
+				HttpHeaders headers = new HttpHeaders();
+				// set location header to url of newly created convenor
+				headers.setLocation(ucBuilder.path("/convenors/{id}").buildAndExpand(currentConvenor.getId()).toUri());
+
+				// return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+
+				// return header with location of new resource and status code created with new
+				// resources body
+				return ResponseEntity.created(headers.getLocation()).headers(headers)
+						.body(new SuccessInfo("New covenor successfully created"));
+
+			} else if (repo.existsById(currentConvenor.getId())) {
+				// if id exist return conflict status
+				return new ResponseEntity<ErrorInfo>(
+						new ErrorInfo(
+								"Convenor with id " + currentConvenor.getId() + "is already exists in the system."),
+						HttpStatus.CONFLICT);
+			}
+		}
+		// if something else then return bad request status
+		return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid input data"),
+				HttpStatus.BAD_REQUEST);
 	}
 
 	/*
@@ -119,51 +145,57 @@ public class ConvenorRestController {
 		Convenor currentConvenor = repo.findById(id)
 				.orElseThrow(() -> new ConvenorNotFoundException(id));
 
-		// if id not exist return bad request status
-		if (repo.findById(id).isPresent()) {
-			// update convenor name
-			currentConvenor.setName(convenor.getName());
-			// update convenor email
-			currentConvenor.setPosition(convenor.getPosition());
-			// clear convenor modules
-			currentConvenor.getModules().clear();
-			// add new convenor modules
-			currentConvenor.getModules().addAll(convenor.getModules());
-			// save to repo
-			repo.save(currentConvenor);
-
-			// return currentConvenor object and http status OK
-			return new ResponseEntity<SuccessInfo>(new SuccessInfo("Convenor successfully updated"), HttpStatus.OK);
-		} else
+		if (!(convenor.getModules() == null && convenor.getName() == null && convenor.getPosition() == null)) {
 			// if id not exist return bad request status
-			return new ResponseEntity<BadRequestException>(new BadRequestException(id),
-					HttpStatus.BAD_REQUEST);
+			if (repo.findById(id).isPresent()) {
+				// update convenor name
+				currentConvenor.setName(convenor.getName());
+				// update convenor email
+				currentConvenor.setPosition(convenor.getPosition());
+				// clear convenor modules
+				currentConvenor.getModules().clear();
+				// add new convenor modules
+				currentConvenor.getModules().addAll(convenor.getModules());
+				// save to repo
+				repo.save(currentConvenor);
 
+				// return currentConvenor object and http status OK
+				return new ResponseEntity<SuccessInfo>(new SuccessInfo("Convenor successfully updated"), HttpStatus.OK);
+			}
+		}
+		// if id not exist return bad request status
+		return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid input data"),
+				HttpStatus.BAD_REQUEST);
 	}
 
 	// delete a convenor
 	@DeleteMapping("/convenors/{id}")
-	public ResponseEntity<?> deleteConvenor(@PathVariable Long id) {
+	public ResponseEntity<?> deleteConvenor(@PathVariable String id) throws NumberFormatException {
+		try {
+			Long idToDelete = Long.valueOf(id);
+			// get convenor from repo by id if not then throw exception not found
+			Convenor convenor = repo.findById(idToDelete)
+					.orElseThrow(() -> new ConvenorNotFoundException(idToDelete));
 
-		// get convenor from repo by id if not then throw exception not found
-		Convenor convenor = repo.findById(id)
-				.orElseThrow(() -> new ConvenorNotFoundException(id));
-
-		// check if convenor by id is present
-		if (repo.findById(id).isPresent()) {
-			// retrive module from repo by id
-			List<Module> modules = convenor.getModules();
-			// clear
-			modules.clear();
-			// delete from repo
-			repo.delete(repo.findById(id).get());
-			// retun deleted module with HttpStatus ok (200)
-			return new ResponseEntity<SuccessInfo>(new SuccessInfo("Convenor with id " + id + " successfully deleted"),
-					HttpStatus.OK);
-		} else {
+			// check if convenor by id is present
+			if (repo.findById(idToDelete).isPresent()) {
+				// retrive module from repo by id
+				List<Module> modules = convenor.getModules();
+				// clear
+				modules.clear();
+				// delete from repo
+				repo.delete(repo.findById(idToDelete).get());
+				// retun deleted module with HttpStatus ok (200)
+				return new ResponseEntity<SuccessInfo>(
+						new SuccessInfo("Convenor with id " + id + " successfully deleted"),
+						HttpStatus.OK);
+			}
+		} catch (NumberFormatException e) {
 			// if not found return bad request status
-			return new ResponseEntity<BadRequestException>(new BadRequestException(id), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid input data"), HttpStatus.BAD_REQUEST);
 		}
+		// if not found return bad request status
+		return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid input data"), HttpStatus.BAD_REQUEST);
 	}
 
 }

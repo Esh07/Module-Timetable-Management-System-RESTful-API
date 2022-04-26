@@ -1,5 +1,6 @@
 package edu.leicester.co2103.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,8 @@ public class SessionRestController {
     public ResponseEntity<?> filterSessions(@RequestParam(value = "module", required = false) String moduleId,
             @RequestParam(value = "convenor", required = false) Long convenorId) {
 
+        // check request parameters values is exact same
+
         // retrive all sessions
         List<Session> sessions = (List<Session>) sessionRepo.findAll();
 
@@ -74,22 +77,32 @@ public class SessionRestController {
                 Module module = moduleRepo.findById(moduleId)
                         .orElseThrow(() -> new ModuleNotFoundException(moduleId));
 
-                List<Module> filteredSession = null;
-
                 // check moduleId exists in convenor
                 if (convenor.getModules().contains(module)) {
-                    filteredSession = convenor.getModules();
-
-                    for (Module m : filteredSession) {
+                    // get all the module from convenor
+                    List<Module> filteredModule = convenor.getModules();
+                    List<Session> moduleSessions = new ArrayList<>();
+                    for (Module m : filteredModule) {
                         if (m.getCode().equals(moduleId)) {
-                            return new ResponseEntity<>(m.getSessions(), HttpStatus.OK);
+                            moduleSessions.addAll(m.getSessions());
                         }
                     }
+                    if (moduleSessions.size() > 0) {
+                        return new ResponseEntity<List<Session>>(moduleSessions, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<ErrorInfo>(new ErrorInfo("No sessions found for module with id "
+                                + moduleId), HttpStatus.NOT_FOUND);
+                    }
                 } else {
-                    return new ResponseEntity<ErrorInfo>(new ErrorInfo("No sessions found for module with id "
-                            + moduleId + " taught by convenor with id " + convenorId), HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<ErrorInfo>(
+                            new ErrorInfo("Convenor with id " + convenorId + " does not teach module with id "
+                                    + moduleId),
+                            HttpStatus.NOT_FOUND);
                 }
-            } else if (moduleId != null || convenorId != null) {
+            }
+
+            // check if either one parameter passed
+            if (moduleId != null || convenorId != null) {
 
                 // if only moduleId is passed
                 if (moduleId != null) {
@@ -99,8 +112,12 @@ public class SessionRestController {
                             .orElseThrow(() -> new ModuleNotFoundException(moduleId));
 
                     List<Session> modulesSessions = module.getSessions();
-
-                    return new ResponseEntity<>(modulesSessions, HttpStatus.OK);
+                    if (modulesSessions.size() > 0) {
+                        return new ResponseEntity<>(modulesSessions, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<ErrorInfo>(new ErrorInfo("No sessions found for module with id "
+                                + moduleId), HttpStatus.NOT_FOUND);
+                    }
 
                 } else {
 
@@ -120,11 +137,8 @@ public class SessionRestController {
             } else {
                 return new ResponseEntity<>(sessionRepo.findAll(), HttpStatus.OK);
             }
-        } else {
-            return new ResponseEntity<ErrorInfo>(new ErrorInfo("No sessions found"), HttpStatus.NOT_FOUND);
-
         }
-        return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid request"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ErrorInfo>(new ErrorInfo("No sessions found"), HttpStatus.NOT_FOUND);
     }
 
 }

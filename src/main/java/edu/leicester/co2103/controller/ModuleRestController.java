@@ -38,16 +38,13 @@ public class ModuleRestController {
      */
     @GetMapping("/modules")
     public ResponseEntity<?> allModules() {
-
+        List<Module> modules = (List<Module>) moduleRepo.findAll();
         // check if there are no modules in the repo then return http status no content
-        if ((List<Module>) moduleRepo.findAll() == null) {
+        if (modules == null || modules.size() == 0) {
 
             // return error info object with http status code not found
             return new ResponseEntity<ErrorInfo>(new ErrorInfo("Could not find any module"), HttpStatus.NOT_FOUND);
         }
-        // get all modules from repo
-        List<Module> modules = (List<Module>) moduleRepo.findAll();
-
         // return list of modules with http status code OK
         return new ResponseEntity<>(modules, HttpStatus.OK);
 
@@ -75,7 +72,7 @@ public class ModuleRestController {
 
         // check if module object not null. if null return error info object with http
         // status code bad request
-        if (module != null) {
+        if (module.getCode() != null) {
 
             // current module
             Module newModule = module;
@@ -96,7 +93,7 @@ public class ModuleRestController {
 
         } else
             // return error info object with http status code bad request
-            return new ResponseEntity<ErrorInfo>(new ErrorInfo("Inavlid input date"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ErrorInfo>(new ErrorInfo("Inavlid input data"), HttpStatus.BAD_REQUEST);
     }
 
     /*
@@ -190,8 +187,10 @@ public class ModuleRestController {
     @PostMapping("/modules/{code}/sessions")
     public ResponseEntity<?> addSession(@PathVariable String code, HttpEntity<Session> session) {
 
-        if (session == null) {
-            return new ResponseEntity<BadRequestException>(new BadRequestException(session), HttpStatus.BAD_REQUEST);
+        if (session.getBody().getTopic() == null && session.getBody().getDatetime() == null
+                && session.getBody().getDuration() <= 0) {
+            return new ResponseEntity<ErrorInfo>(new ErrorInfo("Invalid input data"),
+                    HttpStatus.BAD_REQUEST);
         }
 
         // incoming request body

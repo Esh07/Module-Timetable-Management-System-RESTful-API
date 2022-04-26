@@ -194,17 +194,22 @@ paths:
       responses:
         '200': #The response status code for OK for success
           $ref: '#/components/responses/ModuleList'
-        '204': #The response status code
-          description: No content
-          content: {}
         '404': #The response status code
           description: Not found
           content: 
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
-              example:
-                message: 'Could not find convenor with id'
+              anyOf:
+                - $ref: '#/components/schemas/ErrorInfo'
+                - $ref: '#/components/schemas/ErrorInfo'
+              examples:
+                NoConvenorFound:
+                  value:
+                    message: 'Could not find convenor with id'
+                NoModuleFound:
+                  value:
+                    message: 'No module associated to convenor with id'
+
   /modules:
     get:
       tags:
@@ -369,9 +374,6 @@ paths:
       responses:
         '200': #The response status code for OK for success
           $ref: '#/components/responses/SessionList'
-        '204': #The response status code
-          description: No content
-          content: {}
         '404': #The response status code
           description: Not found
           content: 
@@ -668,14 +670,6 @@ paths:
                   $ref: '#/components/examples/SessionList'
                 SessionListByModuleThatTaughtByConvenor:
                   $ref: '#/components/examples/SingleSession'
-        '400': #The response status code
-          description: Bad request
-          content: 
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorInfo'
-              example:
-                message: 'Invalid request'
         '404': #The response status code
           description: not found
           content: 
@@ -684,15 +678,19 @@ paths:
                 anyOf:
                   - $ref: '#/components/schemas/ErrorInfo'
                   - $ref: '#/components/schemas/ErrorInfo'
-                  - $ref: '#/components/responses/NoModuleFound'
-                  - $ref: '#/components/responses/NoConvenorFound'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
+                  - $ref: '#/components/schemas/ErrorInfo'
               examples:
                 NoSessionsFound:
                   value:
                     message: 'No sessions found'
-                NoSessionFoundInModuleTaughtByConvenor:
+                NoSessionFoundForModule:
                   value:
-                    message: 'No sessions found for module with id taught by convenor with id'
+                    message: 'No sessions found for module with id'
+                ConvenorNotTeachesModule:
+                  value:
+                    message: 'Convenor with id does not teach module with code'
                 NoModuleFound:
                   value:
                     message: 'Could not find any modules'

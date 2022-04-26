@@ -1,3 +1,2109 @@
 {
-	"info": "Placeholder file, replace this content with your Postman Collection"
+  "info": {
+    "_postman_id": "a2c89589-9442-4cbb-b321-5faf1475c941",
+    "name": "Timetable - REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Convenor End point",
+      "item": [
+        {
+          "name": "Convenor Erros",
+          "item": [
+            {
+              "name": "Convenors Not found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error no convenors\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/convenors",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors"]
+                },
+                "description": "see list of convenors"
+              },
+              "response": []
+            },
+            {
+              "name": "Not found convenor by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error convenor not found by Id\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "99"
+                    }
+                  ]
+                },
+                "description": "Retrive single convenor by id"
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid input error",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error invalid data supplied\", function(){",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n   \n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/convenors",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors"]
+                },
+                "description": "Add convenor "
+              },
+              "response": []
+            },
+            {
+              "name": "Convenor not found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error no Convenors found to be updated\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"name\": \"Kehinde Aruleba\",\n    \"position\": \"LECTURER\",\n    \"modules\": [\n        {\n            \"code\": \"CO2103\",\n            \"title\": \"Software Architecture\",\n            \"level\": 2,\n            \"optional\": false,\n            \"sessions\": [\n                {\n                    \"id\": 1,\n                    \"topic\": \"REST APIs\",\n                    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n                    \"duration\": 2\n                }\n            ]\n    } ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "description": "Update the convenor information"
+              },
+              "response": []
+            },
+            {
+              "name": "Bad request",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error bad entry entered\", function(){",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "5"
+                    }
+                  ]
+                },
+                "description": "Update the convenor information"
+              },
+              "response": []
+            },
+            {
+              "name": "invalid convenor",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error invalid entry enter\", function(){",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "gg"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Convenor not found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error convenor not found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Conevnor not found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error no module associated with convenor\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id", "modules"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No Module found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error no module associated to this convenor\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/convenors/:id/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["convenors", ":id", "modules"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "8"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "list all convenors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Received convenor list\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/convenors",
+              "host": ["{{base_url}}"],
+              "path": ["convenors"]
+            },
+            "description": "see list of convenors"
+          },
+          "response": []
+        },
+        {
+          "name": "Get convenor by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Succesfully get convenor by Id\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/convenors/:id",
+              "host": ["{{base_url}}"],
+              "path": ["convenors", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3"
+                }
+              ]
+            },
+            "description": "Retrive single convenor by id"
+          },
+          "response": []
+        },
+        {
+          "name": "Add conevnor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successfully created convenor\", function(){",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\":1,\n    \"name\":\"Eshvar\",\n    \"position\": \"GTA\",\n    \"module\":[\n            {\n                \"code\": \"CO2306\",\n                \"title\": \"Web Development Advance\",\n                \"level\": 3,\n                \"session\":\"null\"\n                }\n            ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/convenors",
+              "host": ["{{base_url}}"],
+              "path": ["convenors"]
+            },
+            "description": "Add convenor "
+          },
+          "response": []
+        },
+        {
+          "name": "Update Convenor info",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Convenor updated succesfully\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Kehinde Aruleba\",\n    \"position\": \"LECTURER\",\n    \"modules\": [\n        {\n            \"code\": \"CO2103\",\n            \"title\": \"Software Architecture\",\n            \"level\": 2,\n            \"optional\": false,\n            \"sessions\": [\n                {\n                    \"id\": 1,\n                    \"topic\": \"REST APIs\",\n                    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n                    \"duration\": 2\n                }\n            ]\n    } ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/convenors/:id",
+              "host": ["{{base_url}}"],
+              "path": ["convenors", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "Update the convenor information"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete convenor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Convenor deleted succesfully\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/convenors/:id",
+              "host": ["{{base_url}}"],
+              "path": ["convenors", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modules taught by Convenor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Received all the modules teaches by convenor\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/convenors/:id/modules",
+              "host": ["{{base_url}}"],
+              "path": ["convenors", ":id", "modules"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Module End point",
+      "item": [
+        {
+          "name": "Module",
+          "item": [
+            {
+              "name": "Add modules",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"New module added\", function(){",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"code\": \"CO2306\",\n    \"title\": \"Web Development Advance\",\n    \"level\": 3,\n    \"session\":\"null\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Modules",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Received list of modules\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get module by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Retrived module by ID\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "CO2103"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Module By ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Module deleted\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "CO3095"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Patch Module by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Succesfully update module info\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\":\"Artifical Intelligence\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "CO2103"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Module Error",
+          "item": [
+            {
+              "name": "No Modules",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No module by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Module not found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "CO2104"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Not found Module by Id to delete",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Module not found to delete\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "CO2104"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Not found Module by ID to patch",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Module not found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\":\"Artifical Intelligence\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "CO3094"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Invalid Module data",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Invalid information enter\", function(){",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Module already exists",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Check if module already exists\", function(){",
+                      "    pm.response.to.have.status(409);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"code\": \"CO2103\",\n    \"title\": \"Web Development Advance\",\n    \"level\": 3,\n    \"session\":\"null\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Module Session End point",
+          "item": [
+            {
+              "name": "Get All Sessions of Module by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Retrived all module sessions\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Session to Module",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Created new session for module\", function(){",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"id\": 2,\n        \"topic\": \"HTML & CSS Basics\",\n        \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n        \"duration\": 3\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2306"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get single session of module by module id and session id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Retrived specific module session by id\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete 1 module's session by session by id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Sessiion by id is deleted\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Patch a module's session by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Session information is updated\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 2,\n    \"topic\": \"It's working\",\n    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n    \"duration\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2306"
+                    },
+                    {
+                      "key": "id",
+                      "value": "8"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update one module's session info by session ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Module's session information updates\", function(){",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 2,\n    \"topic\": \"It'working\",\n    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n    \"duration\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2306"
+                    },
+                    {
+                      "key": "id",
+                      "value": "8"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Module session error",
+          "item": [
+            {
+              "name": "No Module found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error module not found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2104"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No Session for Module",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No session found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2104"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No Module found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No module found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"id\": 2,\n        \"topic\": \"HTML & CSS Basics\",\n        \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n        \"duration\": 3\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "co2305"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session Already exists",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error module exists\", function(){",
+                      "    pm.response.to.have.status(409);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"id\": 8,\n        \"topic\": \"HTML & CSS Basics\",\n        \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n        \"duration\": 3\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2306"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Bad input",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Throw error for bad input\", function(){",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n       \n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No Moudle found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Module not found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2104"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No session found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No session found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    },
+                    {
+                      "key": "id",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No module found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No module found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2104"
+                    },
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No session found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No session found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    },
+                    {
+                      "key": "id",
+                      "value": "3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No module found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No module found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 2,\n    \"topic\": \"It's working\",\n    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n    \"duration\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2104"
+                    },
+                    {
+                      "key": "id",
+                      "value": "7"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No session found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No session found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 2,\n    \"topic\": \"It's working\",\n    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n    \"duration\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    },
+                    {
+                      "key": "id",
+                      "value": "7"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Module not found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No module found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 2,\n    \"topic\": \"It'working\",\n    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n    \"duration\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2104"
+                    },
+                    {
+                      "key": "id",
+                      "value": "7"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session not found",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"No session found\", function(){",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": 2,\n    \"topic\": \"It'working\",\n    \"datetime\": \"2022-02-25T12:00:00.000+00:00\",\n    \"duration\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/modules/:code/sessions/:id",
+                  "host": ["{{base_url}}"],
+                  "path": ["modules", ":code", "sessions", ":id"],
+                  "variable": [
+                    {
+                      "key": "code",
+                      "value": "CO2103"
+                    },
+                    {
+                      "key": "id",
+                      "value": "7"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Session End point",
+      "item": [
+        {
+          "name": "Filter session by convenor ID and/module code else return list of all sessions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Retrived all session based on given parameters\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions?module=CO2103",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"],
+              "query": [
+                {
+                  "key": "convenor",
+                  "value": "3",
+                  "disabled": true
+                },
+                {
+                  "key": "module",
+                  "value": "CO2103"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "No module found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"No module found\", function(){",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions?module=CO2104",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"],
+              "query": [
+                {
+                  "key": "convenor",
+                  "value": "3",
+                  "disabled": true
+                },
+                {
+                  "key": "module",
+                  "value": "CO2104"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "No convenor found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"No convenor found\", function(){",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions?convenor=1",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"],
+              "query": [
+                {
+                  "key": "convenor",
+                  "value": "1"
+                },
+                {
+                  "key": "module",
+                  "value": "CO2103",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Module not taught by Convenor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Convenor does not teach this module\", function(){",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions?convenor=3&module=CO2306",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"],
+              "query": [
+                {
+                  "key": "convenor",
+                  "value": "3"
+                },
+                {
+                  "key": "module",
+                  "value": "CO2306"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New module for test",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"New module added\", function(){",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"code\": \"CO111\",\n    \"title\": \"Web Development Advance\",\n    \"level\": 3,\n    \"session\":\"null\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/modules",
+              "host": ["{{base_url}}"],
+              "path": ["modules"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "No session found for module",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"No session retrived\", function(){",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions?module=CO111",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"],
+              "query": [
+                {
+                  "key": "convenor",
+                  "value": "3",
+                  "disabled": true
+                },
+                {
+                  "key": "module",
+                  "value": "CO111"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete all sessions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"All session deleted\", function(){",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "No Session found to delete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"No session found to delete\", function(){",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "No Session found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"No session found\", function(){",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions?module=CO2103",
+              "host": ["{{base_url}}"],
+              "path": ["sessions"],
+              "query": [
+                {
+                  "key": "convenor",
+                  "value": "3",
+                  "disabled": true
+                },
+                {
+                  "key": "module",
+                  "value": "CO2103"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
 }
