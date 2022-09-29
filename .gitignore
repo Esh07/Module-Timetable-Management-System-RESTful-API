@@ -207,3 +207,5 @@ gradle-app.setting
 #Ignore application.properties
 src/main/resources/application.properties
 
+.idea/
+.vscode/
