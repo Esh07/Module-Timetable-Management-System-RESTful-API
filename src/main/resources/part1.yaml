@@ -17,26 +17,26 @@ tags:
     description: Everything about modules
   - name: sessions
     description: Everything about sessions
-    
+
 paths:
   /convenors:
     get:
-      summary: >- 
-          Get all the list of available convenor
+      summary: >-
+        Get all the list of available convenor
       tags:
         - convenors
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/ConvenorList'
-                  
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/ConvenorList"
+
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'No convenor found'
+                message: "No convenor found"
     post:
       tags:
         - convenors
@@ -47,31 +47,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Convenor'
+              $ref: "#/components/schemas/Convenor"
       responses:
-        '201': #response 201 status for CREATED
+        "201": #response 201 status for CREATED
           description: New convenor successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Convenor successfully created'
-                        
-        '400': #Response 400 status for BAD Request
+                message: "Convenor successfully created"
+
+        "400": #Response 400 status for BAD Request
           description: Bad request
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                  message: "Invalid input data"
-        '409': #Response 409 status for CONFLICT
+                message: "Invalid input data"
+        "409": #Response 409 status for CONFLICT
           description: Convenor id already exists
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
                 message: "Convenor with id is already exists in the system."
   /convenors/{id}:
@@ -90,16 +90,16 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/SingleConvenor'
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/SingleConvenor"
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find convenor with id'
+                message: "Could not find convenor with id"
     put:
       tags:
         - convenors
@@ -119,9 +119,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Convenor'
+              $ref: "#/components/schemas/Convenor"
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: convenor successfully updated
           content:
             application/json:
@@ -129,14 +129,14 @@ paths:
                 $ref: "#/components/schemas/SuccessInfo"
               example:
                 message: "Convenor successfully updated"
-        '404': #The response status code
+        "404": #The response status code
           description: convenor not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not found convenor with id'
+                message: "Could not found convenor with id"
     delete:
       tags:
         - convenors
@@ -152,30 +152,30 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: convenor successfully deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Convenor with id successfully deleted'
-        '404': #The response status code
+                message: "Convenor with id successfully deleted"
+        "404": #The response status code
           description: convenor not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find convenor with id'
-        '400': #Response 400 status for BAD Request
+                message: "Could not find convenor with id"
+        "400": #Response 400 status for BAD Request
           description: Bad request
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                  message: "Invalid input data"
+                message: "Invalid input data"
   /convenors/{id}/modules: #Get all modules of a convenor
     get:
       tags:
@@ -192,23 +192,23 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/ModuleList'
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/ModuleList"
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
               anyOf:
-                - $ref: '#/components/schemas/ErrorInfo'
-                - $ref: '#/components/schemas/ErrorInfo'
+                - $ref: "#/components/schemas/ErrorInfo"
+                - $ref: "#/components/schemas/ErrorInfo"
               examples:
                 NoConvenorFound:
                   value:
-                    message: 'Could not find convenor with id'
+                    message: "Could not find convenor with id"
                 NoModuleFound:
                   value:
-                    message: 'No module associated to convenor with id'
+                    message: "No module associated to convenor with id"
 
   /modules:
     get:
@@ -217,16 +217,16 @@ paths:
       summary: >-
         Get all modules
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/ModuleList'
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/ModuleList"
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find any module'
+                message: "Could not find any module"
     post:
       tags:
         - modules
@@ -237,30 +237,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Module'
+              $ref: "#/components/schemas/Module"
       responses:
-        '201': #response 201 status for CREATED
+        "201": #response 201 status for CREATED
           description: New module successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Module successfully created'
-        '400': #Response 400 status for BAD Request
+                message: "Module successfully created"
+        "400": #Response 400 status for BAD Request 
           description: Bad request
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                  message: "Invalid input data"
-        '409': #Response 409 status for CONFLICT
+                message: "Invalid input data"
+        "409": #Response 409 status for CONFLICT
           description: Module id already exists
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
                 message: "Module with id is already exists"
   /modules/{id}:
@@ -279,16 +279,16 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/SingleModule'
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/SingleModule"
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find module with id'
+                message: "Could not find module with id"
     delete:
       tags:
         - modules
@@ -304,22 +304,22 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: module successfully deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Module successfully deleted'
-        '404': #The response status code
+                message: "Module successfully deleted"
+        "404": #The response status code
           description: module not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find module with id'
+                message: "Could not find module with id"
     patch:
       tags:
         - modules
@@ -339,24 +339,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Module'
+              $ref: "#/components/schemas/Module"
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: module successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Module successfully updated'
-        '404': #The response status code
+                message: "Module successfully updated"
+        "404": #The response status code
           description: module not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find module with id'
+                message: "Could not find module with id"
   /modules/{code}/sessions: #Get all sessions of a module
     get:
       tags:
@@ -372,23 +372,23 @@ paths:
           schema:
             type: string
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/SessionList'
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/SessionList"
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/responses/NoSessionFoundForModule'
-                  - $ref: '#/components/responses/NoModuleFound'
+                  - $ref: "#/components/responses/NoSessionFoundForModule"
+                  - $ref: "#/components/responses/NoModuleFound"
               examples:
                 NoSessionFoundForModule:
                   value:
-                    message: 'No seesion found for module M1' 
+                    message: "No seesion found for module M1"
                 NoModuleFound:
                   value:
-                    message: 'Could not find module with code'
+                    message: "Could not find module with code"
     post:
       tags:
         - modules
@@ -407,40 +407,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Session'
+              $ref: "#/components/schemas/Session"
       responses:
-        '201': #response 201 status for CREATED
+        "201": #response 201 status for CREATED
           description: New session successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Session successfully created'
-        '400': #Response 400 status for BAD Request
+                message: "Session successfully created"
+        "400": #Response 400 status for BAD Request
           description: Bad request
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                  message: "Invalid input data"
-        '404': #Response 404 status for NOT FOUND
+                message: "Invalid input data"
+        "404": #Response 404 status for NOT FOUND
           description: Module not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'Could not find module with code'
-        '409': #Response 409 status for CONFLICT
+                message: "Could not find module with code"
+        "409": #Response 409 status for CONFLICT
           description: Session id already exists
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: "Session with id already exist" 
+                message: "Session with id already exist"
   /modules/{code}/sessions/{id}: #Get session by id
     get:
       tags:
@@ -464,23 +464,23 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
-          $ref: '#/components/responses/SingleSession'
-        '404': #The response status code
+        "200": #The response status code for OK for success
+          $ref: "#/components/responses/SingleSession"
+        "404": #The response status code
           description: Not found
-          content: 
+          content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/responses/NoModuleFound'
-                  - $ref: '#/components/responses/SessionIdNotFound'
+                  - $ref: "#/components/responses/NoModuleFound"
+                  - $ref: "#/components/responses/SessionIdNotFound"
               examples:
                 MoudeCodeNotFound:
                   value:
-                    message: 'Could not find module with code'
+                    message: "Could not find module with code"
                 SessionIdNotFound:
                   value:
-                    message: 'Could not find session with id in module'
+                    message: "Could not find session with id in module"
     delete:
       tags:
         - modules
@@ -503,29 +503,29 @@ paths:
             type: integer
             format: int64
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: session successfully deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Session successfully deleted from module with code'
-        '404': #The response status code
+                message: "Session successfully deleted from module with code"
+        "404": #The response status code
           description: not found
-          content: 
+          content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/responses/NoModuleFound'
-                  - $ref: '#/components/responses/SessionIdNotFound'
+                  - $ref: "#/components/responses/NoModuleFound"
+                  - $ref: "#/components/responses/SessionIdNotFound"
               examples:
                 MoudeCodeNotFound:
                   value:
-                    message: 'Could not find module with code'
+                    message: "Could not find module with code"
                 SessionIdNotFound:
                   value:
-                    message: 'Could not find session with id in module'
+                    message: "Could not find session with id in module"
     patch:
       tags:
         - modules
@@ -552,31 +552,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Session'
+              $ref: "#/components/schemas/Session"
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: session successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Session successfully updated'
-        '404': #The response status code
+                message: "Session successfully updated"
+        "404": #The response status code
           description: session not found
-          content: 
+          content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/responses/NoModuleFound'
-                  - $ref: '#/components/responses/SessionIdNotFound'
+                  - $ref: "#/components/responses/NoModuleFound"
+                  - $ref: "#/components/responses/SessionIdNotFound"
               examples:
                 MoudeCodeNotFound:
                   value:
-                    message: 'Could not find module with code'
+                    message: "Could not find module with code"
                 SessionIdNotFound:
                   value:
-                    message: 'Could not find session with id in module.'  
+                    message: "Could not find session with id in module."
     put:
       tags:
         - modules
@@ -603,31 +603,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Session'
+              $ref: "#/components/schemas/Session"
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: session successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'Session successfully updated'
-        '404': #The response status code
+                message: "Session successfully updated"
+        "404": #The response status code
           description: not found
-          content: 
+          content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/responses/NoModuleFound'
-                  - $ref: '#/components/responses/SessionIdNotFound'
+                  - $ref: "#/components/responses/NoModuleFound"
+                  - $ref: "#/components/responses/SessionIdNotFound"
               examples:
                 MoudeCodeNotFound:
                   value:
-                    message: 'Could not find module with code'
+                    message: "Could not find module with code"
                 SessionIdNotFound:
                   value:
-                    message: 'Could not find session with id in module.'          
+                    message: "Could not find session with id in module."
   /sessions: #Get all sessions
     get:
       tags:
@@ -651,74 +651,74 @@ paths:
           schema:
             type: string
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: sessions successfully retrieved
           content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/schemas/Session'
-                  - $ref: '#/components/schemas/Session'
-                  - $ref: '#/components/schemas/Session'
-                  - $ref: '#/components/schemas/Session'
+                  - $ref: "#/components/schemas/Session"
+                  - $ref: "#/components/schemas/Session"
+                  - $ref: "#/components/schemas/Session"
+                  - $ref: "#/components/schemas/Session"
               examples:
                 AllSessionList:
-                  $ref: '#/components/examples/SessionList'
+                  $ref: "#/components/examples/SessionList"
                 SessionListByCovenor:
-                  $ref: '#/components/examples/SessionList'
+                  $ref: "#/components/examples/SessionList"
                 SessionListByModule:
-                  $ref: '#/components/examples/SessionList'
+                  $ref: "#/components/examples/SessionList"
                 SessionListByModuleThatTaughtByConvenor:
-                  $ref: '#/components/examples/SingleSession'
-        '404': #The response status code
+                  $ref: "#/components/examples/SingleSession"
+        "404": #The response status code
           description: not found
-          content: 
+          content:
             application/json:
               schema:
                 anyOf:
-                  - $ref: '#/components/schemas/ErrorInfo'
-                  - $ref: '#/components/schemas/ErrorInfo'
-                  - $ref: '#/components/schemas/ErrorInfo'
-                  - $ref: '#/components/schemas/ErrorInfo'
-                  - $ref: '#/components/schemas/ErrorInfo'
+                  - $ref: "#/components/schemas/ErrorInfo"
+                  - $ref: "#/components/schemas/ErrorInfo"
+                  - $ref: "#/components/schemas/ErrorInfo"
+                  - $ref: "#/components/schemas/ErrorInfo"
+                  - $ref: "#/components/schemas/ErrorInfo"
               examples:
                 NoSessionsFound:
                   value:
-                    message: 'No sessions found'
+                    message: "No sessions found"
                 NoSessionFoundForModule:
                   value:
-                    message: 'No sessions found for module with id'
+                    message: "No sessions found for module with id"
                 ConvenorNotTeachesModule:
                   value:
-                    message: 'Convenor with id does not teach module with code'
+                    message: "Convenor with id does not teach module with code"
                 NoModuleFound:
                   value:
-                    message: 'Could not find any modules'
+                    message: "Could not find any modules"
                 NoConvenorFound:
                   value:
-                    message: 'Could not find any convenors'
+                    message: "Could not find any convenors"
     delete:
       tags:
         - sessions
       summary: >-
         Delete all sessions
       responses:
-        '200': #The response status code for OK for success
+        "200": #The response status code for OK for success
           description: sessions successfully deleted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessInfo'
+                $ref: "#/components/schemas/SuccessInfo"
               example:
-                message: 'All sessions succesfully deleted'
-        '404': #The response status code
+                message: "All sessions successfully deleted"
+        "404": #The response status code
           description: not found
-          content: 
+          content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorInfo'
+                $ref: "#/components/schemas/ErrorInfo"
               example:
-                message: 'No session found'
+                message: "No session found"
 components:
   schemas:
     Convenor: #The schema for convenor
@@ -736,7 +736,7 @@ components:
         modules:
           type: array
           items:
-            $ref: '#/components/schemas/Module'
+            $ref: "#/components/schemas/Module"
     Module: #The schema for Module
       type: object
       properties:
@@ -756,7 +756,7 @@ components:
         sessions:
           type: array
           items:
-            $ref: '#/components/schemas/Session'
+            $ref: "#/components/schemas/Session"
     Session:
       type: object
       properties:
@@ -803,28 +803,28 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Convenor'
+            $ref: "#/components/schemas/Convenor"
     Module:
       description: A JSON object containing a Module information
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Module'
+            $ref: "#/components/schemas/Module"
     Session:
       description: A JSON object containing a Session information
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Session'
+            $ref: "#/components/schemas/Session"
   responses:
     ConvenorList:
       description: A JSON containing convenors objects
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Convenor'
+            $ref: "#/components/schemas/Convenor"
           example:
             convenors:
               - id: 1
@@ -862,7 +862,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Convenor'
+            $ref: "#/components/schemas/Convenor"
           example:
             convenor:
               id: 1
@@ -900,7 +900,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Module'
+            $ref: "#/components/schemas/Module"
           example:
             modules:
               - code: M1
@@ -934,7 +934,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Module'
+            $ref: "#/components/schemas/Module"
           example:
             module:
               code: M1
@@ -949,13 +949,13 @@ components:
                 - id: 2
                   topic: Topic 2
                   datetime: "2020-01-02T00:00:00Z"
-                  duration: 2  
+                  duration: 2
     SessionList:
       description: A JSON containing sessions objects
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Session'
+            $ref: "#/components/schemas/Session"
           example:
             sessions:
               - id: 1
@@ -971,7 +971,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Session'
+            $ref: "#/components/schemas/Session"
           example:
             session:
               id: 1
@@ -983,7 +983,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorInfo'
+            $ref: "#/components/schemas/ErrorInfo"
           example:
             message: No session found for module M1
     NoModuleFound:
@@ -991,7 +991,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorInfo'
+            $ref: "#/components/schemas/ErrorInfo"
           example:
             message: Could not find module with code
     SessionIdNotFound:
@@ -999,7 +999,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorInfo'
+            $ref: "#/components/schemas/ErrorInfo"
           example:
             message: Could not find session with id in module
     NoConvenorFound:
@@ -1007,11 +1007,11 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorInfo'
+            $ref: "#/components/schemas/ErrorInfo"
           example:
             message: Could not find convenor with id
   examples:
-    SessionList: 
+    SessionList:
       value:
         sessions:
           - id: 1
@@ -1029,4 +1029,3 @@ components:
           topic: Topic 1
           datetime: "2020-01-01T00:00:00Z"
           duration: 1
-      
