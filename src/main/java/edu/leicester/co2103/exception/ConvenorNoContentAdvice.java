@@ -8,9 +8,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import edu.leicester.co2103.controller.info.ErrorInfo;
 
+/*
+ * This is a controller advice class that handles all the convenor not found exceptions
+ * 
+ */
 @ControllerAdvice
 public class ConvenorNoContentAdvice {
 
+    /*
+     * Exception handler for convenor not found
+     * 
+     * @param ex - exception
+     * 
+     * @return ErrorInfo - error message
+     */
     @ResponseBody
     @ExceptionHandler(ConvenorNoContentException.class)
     @ResponseStatus(HttpStatus.NO_CONTENT)

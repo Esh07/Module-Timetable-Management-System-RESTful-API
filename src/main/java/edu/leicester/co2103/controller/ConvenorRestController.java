@@ -2,8 +2,7 @@ package edu.leicester.co2103.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import edu.leicester.co2103.domain.Module;
-import edu.leicester.co2103.domain.Position;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import edu.leicester.co2103.domain.Module;
+import edu.leicester.co2103.domain.Position;
+
 import edu.leicester.co2103.controller.info.ErrorInfo;
 import edu.leicester.co2103.controller.info.SuccessInfo;
 import edu.leicester.co2103.domain.Convenor;
@@ -25,15 +27,26 @@ import edu.leicester.co2103.exception.BadRequestException;
 import edu.leicester.co2103.exception.ConvenorNotFoundException;
 import edu.leicester.co2103.repo.ConvenorRepository;
 
+/*
+ * This is a controller class that handles all the requests related to convenors
+ * 
+ */
 @RestController
 public class ConvenorRestController {
+
+	/*
+	 * Autowired ConvenorRepository object to access the database and perform CRUD
+	 */
 	@Autowired
 	ConvenorRepository repo;
 
 	/*
-	 * list all convenor
+	 * get all convenors from database
+	 * 
+	 * @method: GET
+	 * 
+	 * @return ResponseEntity<?> - list of convenors with http status code OK
 	 */
-	// listing down all the module convenors
 	@GetMapping("/convenors")
 	public ResponseEntity<?> allConvenor() {
 
@@ -48,10 +61,18 @@ public class ConvenorRestController {
 	}
 
 	/*
-	 * get specific convenor by id
+	 * get specific convenor by id from database
+	 * 
+	 * @param id - id of convenor
+	 * 
+	 * @method: GET
+	 * 
+	 * @return ResponseEntity<?> - convenor object with http status code OK
+	 * 
+	 * @throws ConvenorNotFoundException - if convenor not found
+	 * 
+	 * 
 	 */
-
-	// get single convenor by id
 	@GetMapping("/convenors/{id}")
 	public ResponseEntity<?> getConvenor(@PathVariable Long id) {
 		// fetch convenor by id from repo. if not found throw exception not found
@@ -64,6 +85,15 @@ public class ConvenorRestController {
 
 	/*
 	 * get all module taught by convenor
+	 * 
+	 * @param id - id of convenor
+	 * 
+	 * @method: GET
+	 * 
+	 * @return ResponseEntity<?> - list of modules with http status code OK
+	 * 
+	 * @throws ConvenorNotFoundException - if convenor not found
+	 * 
 	 */
 	@GetMapping("/convenors/{id}/modules")
 	public ResponseEntity<?> convenorModule(@PathVariable Long id) {
@@ -82,6 +112,16 @@ public class ConvenorRestController {
 
 	/*
 	 * add new convenor
+	 * 
+	 * @param none
+	 * 
+	 * @method: POST
+	 * 
+	 * @return ResponseEntity<?> - http status code created with location header
+	 * 
+	 * @throws BadRequestException - if request body is empty
+	 * 
+	 * @throws BadRequestException - if request body is invalid, null, or missing
 	 */
 	@PostMapping("/convenors")
 	public ResponseEntity<?> newConvenor(HttpEntity<Convenor> convenor, UriComponentsBuilder ucBuilder) {
@@ -138,6 +178,21 @@ public class ConvenorRestController {
 
 	/*
 	 * update a convenor information
+	 * 
+	 * @param id - id of convenor
+	 * 
+	 * @param convenor - convenor object
+	 * 
+	 * @method: PUT
+	 * 
+	 * @return ResponseEntity<?> - http status code OK with updated convenor object
+	 * 
+	 * @throws ConvenorNotFoundException - if convenor not found
+	 * 
+	 * @throws BadRequestException - if request body is empty
+	 * 
+	 * @throws BadRequestException - if request body is invalid, null, or missing
+	 * 
 	 */
 	@PutMapping("/convenors/{id}")
 	public ResponseEntity<?> updateConvenor(@PathVariable Long id, @RequestBody Convenor convenor) {
@@ -168,7 +223,20 @@ public class ConvenorRestController {
 				HttpStatus.BAD_REQUEST);
 	}
 
-	// delete a convenor
+	/*
+	 * delete a convenor
+	 * 
+	 * @param id - id of convenor
+	 * 
+	 * @method: DELETE
+	 * 
+	 * @return ResponseEntity<?> - http status code OK with deleted convenor object
+	 * 
+	 * @throws ConvenorNotFoundException - if convenor not found
+	 * 
+	 * @throws NumberFormatException - if id is not a number
+	 * 
+	 */
 	@DeleteMapping("/convenors/{id}")
 	public ResponseEntity<?> deleteConvenor(@PathVariable String id) throws NumberFormatException {
 		try {

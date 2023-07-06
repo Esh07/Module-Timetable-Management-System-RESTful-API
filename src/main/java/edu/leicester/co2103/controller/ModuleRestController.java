@@ -1,14 +1,5 @@
 package edu.leicester.co2103.controller;
 
-import edu.leicester.co2103.controller.info.ErrorInfo;
-import edu.leicester.co2103.controller.info.SuccessInfo;
-import edu.leicester.co2103.domain.Convenor;
-import edu.leicester.co2103.domain.Module;
-import edu.leicester.co2103.domain.Session;
-import edu.leicester.co2103.exception.BadRequestException;
-import edu.leicester.co2103.exception.ModuleNotFoundException;
-import edu.leicester.co2103.repo.ConvenorRepository;
-import edu.leicester.co2103.repo.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -21,20 +12,47 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 import java.util.Optional;
 
+import edu.leicester.co2103.controller.info.ErrorInfo;
+import edu.leicester.co2103.controller.info.SuccessInfo;
+import edu.leicester.co2103.domain.Convenor;
+import edu.leicester.co2103.domain.Module;
+import edu.leicester.co2103.domain.Session;
+import edu.leicester.co2103.exception.BadRequestException;
+import edu.leicester.co2103.exception.ModuleNotFoundException;
+import edu.leicester.co2103.repo.ConvenorRepository;
+import edu.leicester.co2103.repo.ModuleRepository;
+
+/*
+ * This is a controller class that handles all the requests related to modules
+ * 
+ */
 @RestController
 public class ModuleRestController {
 
+    /*
+     * Autowired ModuleRepository object to access the database and perform CRUD
+     */
     @Autowired
     ModuleRepository moduleRepo;
 
+    /*
+     * Autowired ConvenorRepository object to access the database and perform CRUD
+     */
     @Autowired
     ConvenorRepository convenorRepo;
 
     /*
-     * Get all modules
+     * get all modules from database
+     * 
+     * @method: GET
+     * 
+     * @return ResponseEntity<?> - list of modules with http status code OK
+     * 
+     * @throws ModuleNotFoundException if no module found
      */
     @GetMapping("/modules")
     public ResponseEntity<?> allModules() {
@@ -51,7 +69,19 @@ public class ModuleRestController {
     }
 
     /*
-     * get specific module by id
+     * get one module by code
+     * 
+     * @method: GET
+     * 
+     * @param: String code
+     * 
+     * @return ResponseEntity<?> - module object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * 
      */
     @GetMapping("/modules/{code}")
     public ResponseEntity<?> oneModule(@PathVariable String code) {
@@ -65,7 +95,19 @@ public class ModuleRestController {
     }
 
     /*
-     * create a module
+     * update module by code
+     * 
+     * @method: PUT
+     * 
+     * @param: String code, Module module
+     * 
+     * @return ResponseEntity<?> - module object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code does not match
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
      */
     @PostMapping("/modules")
     public ResponseEntity<?> addModule(@RequestBody Module module) {
@@ -97,7 +139,19 @@ public class ModuleRestController {
     }
 
     /*
-     * delete module by id
+     * update module by code
+     * 
+     * @method: PUT
+     * 
+     * @param: String code, Module module
+     * 
+     * @return ResponseEntity<?> - module object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code does not match
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
      */
     @DeleteMapping("/modules/{code}")
     public ResponseEntity<?> deleteModule(@PathVariable String code) {
@@ -122,7 +176,19 @@ public class ModuleRestController {
     }
 
     /*
-     * PATCH mapping to update module title
+     * update module by code
+     * 
+     * @method: PUT
+     * 
+     * @param: String code, Module module
+     * 
+     * @return ResponseEntity<?> - module object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code does not match
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
      */
 
     @PatchMapping("/modules/{code}")
@@ -160,7 +226,19 @@ public class ModuleRestController {
     }
 
     /*
-     * get all modules's session
+     * get all sessions of a module
+     * 
+     * @method: GET
+     * 
+     * @param: String code
+     * 
+     * @return ResponseEntity<?> - list of sessions with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * @throws BadRequestException if module has no sessions
      */
     @GetMapping("/modules/{code}/sessions")
     public ResponseEntity<?> allSessions(@PathVariable String code) {
@@ -182,7 +260,23 @@ public class ModuleRestController {
     }
 
     /*
-     * add session to module
+     * get session by id
+     * 
+     * @method: GET
+     * 
+     * @param: String code, int id
+     * 
+     * @return ResponseEntity<?> - session object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * @throws BadRequestException if module has no sessions
+     * 
+     * @throws BadRequestException if session id is null, empty or blank
+     * 
+     * @throws BadRequestException if session not found
      */
     @PostMapping("/modules/{code}/sessions")
     public ResponseEntity<?> addSession(@PathVariable String code, HttpEntity<Session> session) {
@@ -224,7 +318,23 @@ public class ModuleRestController {
     }
 
     /*
-     * get specific modules's session by id
+     * get session by id
+     * 
+     * @method: GET
+     * 
+     * @param: String code, int id
+     * 
+     * @return ResponseEntity<?> - session object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * @throws BadRequestException if module has no sessions
+     * 
+     * @throws BadRequestException if session id is null, empty or blank
+     * 
+     * @throws BadRequestException if session not found
      */
 
     @GetMapping("/modules/{code}/sessions/{id}")
@@ -249,7 +359,23 @@ public class ModuleRestController {
     }
 
     /*
-     * delete session from module using session id
+     * update session by id
+     * 
+     * @method: PUT
+     * 
+     * @param: String code, int id
+     * 
+     * @return ResponseEntity<?> - session object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * @throws BadRequestException if module has no sessions
+     * 
+     * @throws BadRequestException if session id is null, empty or blank
+     * 
+     * @throws BadRequestException if session not found
      */
     @DeleteMapping("/modules/{code}/sessions/{id}")
     public ResponseEntity<?> deleteSession(@PathVariable String code, @PathVariable Long id) {
@@ -282,7 +408,23 @@ public class ModuleRestController {
     }
 
     /*
-     * Update certains session field by using patch method
+     * update session by id
+     * 
+     * @method: PUT
+     * 
+     * @param: String code, int id
+     * 
+     * @return ResponseEntity<?> - session object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * @throws BadRequestException if module has no sessions
+     * 
+     * @throws BadRequestException if session id is null, empty or blank
+     * 
+     * @throws BadRequestException if session not found
      */
     @PatchMapping("/modules/{code}/sessions/{id}")
     public ResponseEntity<?> updateSpecificSessionInfo(@PathVariable String code, @PathVariable Long id,
@@ -331,7 +473,23 @@ public class ModuleRestController {
     }
 
     /*
-     * Update all fields of session by using PUT method
+     * update all fields of session by using PUT method
+     * 
+     * @method: PUT
+     * 
+     * @param: String code, int id
+     * 
+     * @return ResponseEntity<?> - session object with http status code OK
+     * 
+     * @throws ModuleNotFoundException if module not found
+     * 
+     * @throws BadRequestException if module code is null, empty or blank
+     * 
+     * @throws BadRequestException if module has no sessions
+     * 
+     * @throws BadRequestException if session id is null, empty or blank
+     * 
+     * @throws BadRequestException if session not found
      */
     @PutMapping("/modules/{code}/sessions/{id}")
     public ResponseEntity<?> updateAllSessionInfo(@PathVariable String code, @PathVariable Long id,

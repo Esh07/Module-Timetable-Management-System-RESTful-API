@@ -22,21 +22,37 @@ import edu.leicester.co2103.repo.ConvenorRepository;
 import edu.leicester.co2103.repo.ModuleRepository;
 import edu.leicester.co2103.repo.SessionRepository;
 
+/*
+ * This is a controller class that handles all the requests related to sessions
+ * 
+ */
 @RestController
 public class SessionRestController {
 
+    /*
+     * Autowired SessionRepository object to access the database and perform CRUD
+     */
     @Autowired
     SessionRepository sessionRepo;
 
+    /*
+     * Autowired ModuleRepository object to access the database and perform CRUD
+     */
     @Autowired
     ModuleRepository moduleRepo;
 
+    /*
+     * Autowired ConvenorRepository object to access the database and perform CRUD
+     */
     @Autowired
     ConvenorRepository convenorRepo;
 
     /*
-     * 
      * Delete method to delete all sessions
+     * 
+     * @method: GET
+     * 
+     * @return ResponseEntity<?> - list of sessions with http status code OK
      */
     @DeleteMapping("/sessions")
     public ResponseEntity<?> deleteAllSessions() {
@@ -54,7 +70,13 @@ public class SessionRestController {
     }
 
     /*
-     * Filter a session by module id and covenor id uding request paramerters
+     * Filter a session by module id and convenor id using request parameters
+     * 
+     * @method: GET
+     * 
+     * @param: Long id - the id of the session to be deleted
+     * 
+     * @return ResponseEntity<?> - success message with http status code OK
      */
     @GetMapping("/sessions")
     public ResponseEntity<?> filterSessions(@RequestParam(value = "module", required = false) String moduleId,
