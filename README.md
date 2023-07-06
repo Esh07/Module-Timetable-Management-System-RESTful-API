@@ -1,6 +1,6 @@
-# Module Timetable Management System - RESTful API
 
 [![Module Timetable Management System - RESTful API cover image](./docs/cover.png)](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/)
+# Module Timetable Management System - RESTful API
 
 ## :page_facing_up: Table of Contents
 
