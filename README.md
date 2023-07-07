@@ -72,7 +72,6 @@ To get started with the project, please refer to the [installation guide]().
 
 The API documentation provides detailed information about the available endpoints, request/response schemas, and examples. Please refer to the [API Documentation](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/) for more details.
 
-
 ## :key: Key Learning
 
 **Designing a RESTful API:**
@@ -106,3 +105,8 @@ I learned how to build a database and store data using MySQL. This included deve
 **Dependency Injection:**
 
 The last skill I learned was how to use Spring Data JPA to interact with the database. I used the `@Repository` annotation to create a repository interface, and the `@Autowired` annotation to inject the repository into the controller. I also used the `@Entity` annotation to create an entity class, and the `@Id` annotation to specify the primary key.
+
+
+## :lock: License
+
+Licensed under the [MIT License](./LICENSE).
