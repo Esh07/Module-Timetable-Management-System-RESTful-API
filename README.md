@@ -17,7 +17,7 @@ During my journey of learning Spring Boot, Spring Web, and RESTful API developme
 
 The primary objective of this project was to design and implement an API that organizes and manages module timetables, focusing on convenor information, modules taught, and the sessions delivered within each module.
 
-:book: To get started with the project, please refer to the [Documentation]().
+:book: To get started with the project, please refer to the [installation guide]().
 
 For the API documentation and Swagger UI, please refer to the [API Documentation](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/) section.
 
