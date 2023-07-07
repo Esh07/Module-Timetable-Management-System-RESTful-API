@@ -24,7 +24,7 @@ For the API documentation and Swagger UI, please refer to the [API Documentation
 ## :computer: Technologies Used
 
 - **Programming Language:** Java 11
-- **Framework:** Spring Boot, Spring Web, Spring Data JPA, Spring Security
+- **Framework:** Spring Framework
 - **Build Tool:** Gradle
 - **IDE:** IntelliJ IDEA/VS Code
 - **Database:** MySQL
