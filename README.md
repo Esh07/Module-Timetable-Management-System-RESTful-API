@@ -10,6 +10,7 @@
 - [Documentation](#gear-setup)
   - [Setup](#gear-setup)
   - [API Documentation](#api-documentation)
+- [Key Learnings](#key-key-learnings)
 
 ## Introduction
 
@@ -72,7 +73,7 @@ To get started with the project, please refer to the [installation guide](./Docu
 
 The API documentation provides detailed information about the available endpoints, request/response schemas, and examples. Please refer to the [API Documentation](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/) for more details.
 
-## :key: Key Learning
+## :key: Key Learnings
 
 **Designing a RESTful API:**
 
