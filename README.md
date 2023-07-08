@@ -66,7 +66,7 @@ For the API documentation and Swagger UI, please refer to the [API Documentation
 
 ### :gear: Setup
 
-To get started with the project, please refer to the [installation guide]().
+To get started with the project, please refer to the [installation guide](./Documentation.md#getting-started).
 
 #### API Documentation
 
