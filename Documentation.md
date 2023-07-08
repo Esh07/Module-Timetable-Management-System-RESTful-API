@@ -104,7 +104,7 @@ git clone https://github.com/Esh07/Module-Timetable-Management-System-RESTful-AP
 
 ### Testing the API (Postman)
 
-> **Note:** Before testing the API, make sure you have run the project is running.
+> **Note:** Before testing the API, ensure that the project is running.
 
 1. Open Postman.
 
