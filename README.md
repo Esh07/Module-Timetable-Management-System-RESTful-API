@@ -19,7 +19,7 @@ The primary objective of this project was to design and implement an API that or
 
 <!-- project completed  -->
 
-:book: To get started with the project, please refer to the [installation guide]().
+:book: To get started with the project, please refer to the [installation guide](./Documentation.md#getting-started).
 
 For the API documentation and Swagger UI, please refer to the [API Documentation](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/) section.
 
@@ -106,7 +106,6 @@ I learned how to build a database and store data using MySQL. This included deve
 
 The last skill I learned was how to use Spring Data JPA to interact with the database. I used the `@Repository` annotation to create a repository interface, and the `@Autowired` annotation to inject the repository into the controller. I also used the `@Entity` annotation to create an entity class, and the `@Id` annotation to specify the primary key.
 
-
-## :lock: License
+## License
 
 Licensed under the [MIT License](./LICENSE).
