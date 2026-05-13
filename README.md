@@ -73,6 +73,16 @@ To get started with the project, please refer to the [installation guide](./Docu
 
 The API documentation provides detailed information about the available endpoints, request/response schemas, and examples. Please refer to the [API Documentation](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/) for more details.
 
+## API Summary
+
+| Resource | Operations |
+|---|---|
+| Convenors | Create, Read, Update, Delete |
+| Modules | Manage metadata, assign convenors |
+| Sessions | Manage teaching sessions per module |
+| Validation | Structured error responses for invalid input |
+| Docs | Swagger UI available at `/swagger-ui.html` |
+
 ## :key: Key Learnings
 
 **Designing a RESTful API:**
