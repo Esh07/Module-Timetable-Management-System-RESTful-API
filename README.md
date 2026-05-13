@@ -1,6 +1,18 @@
+<div align="center">
+  
 [![Module Timetable Management System - RESTful API cover image](./docs/cover.png)](https://app.swaggerhub.com/apis-docs/Esh07/Module-Timetable-Management-System-RESTful-API/1.0.0#/)
 
-# Module Timetable Management System - RESTful API
+# 🗓️ Module Timetable REST API
+
+**A Spring Boot REST API for managing university module timetables, convenors, and teaching sessions**
+
+
+[![Java](https://img.shields.io/badge/Java-11-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-2.4.2-6DB33F?logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql&logoColor=white)](https://mysql.com)
+[![Gradle](https://img.shields.io/badge/Gradle-6.x+-02303A?logo=gradle&logoColor=white)](https://gradle.org)
+[![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger&logoColor=black)](https://swagger.io)
+</div>
 
 ## :page_facing_up: Table of Contents
 
