@@ -11,7 +11,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-2.4.2-6DB33F?logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?logo=mysql&logoColor=white)](https://mysql.com)
 [![Gradle](https://img.shields.io/badge/Gradle-6.x+-02303A?logo=gradle&logoColor=white)](https://gradle.org)
-[![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger&logoColor=black)](https://swagger.io)
+[![Swagger](https://img.shields.io/badge/Swagger-OpenAPI(3.x)-85EA2D?logo=swagger&logoColor=black)](https://swagger.io)
 </div>
 
 ## :page_facing_up: Table of Contents
